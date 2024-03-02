@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Debug files
+*.dSYM/
+*.su
+*.idb
+*.pdb
+
+# macOS Finder files
+.DS_Store
