@@ -14,3 +14,7 @@
 - Qt 5.15 or later
 - C++17 compatible compiler
 - CMake 3.15 or higher (for building the project)
+### Prerequisites
+Ensure you have Qt and CMake installed on your system. You can download them from:
+- Qt: [https://www.qt.io/download](https://www.qt.io/download)
+- CMake: [https://cmake.org/download/](https://cmake.org/download/)
