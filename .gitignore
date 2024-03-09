@@ -1,5 +1,5 @@
 #directories
-idea/
+.idea/
 cmake-build-debug/
 # Prerequisites
 *.d
@@ -42,3 +42,4 @@ cmake-build-debug/
 
 # macOS Finder files
 .DS_Store
+.idea
