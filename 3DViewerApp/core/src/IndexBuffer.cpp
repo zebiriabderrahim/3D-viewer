@@ -2,7 +2,7 @@
 // Created by ABDERRAHIM ZEBIRI on 2024-03-16.
 //
 
-#include "IndexBuffer.h"
+#include "../include/IndexBuffer.h"
 
 namespace v3D {
     IndexBuffer::IndexBuffer(const unsigned int *data, GLuint count): count_(count){

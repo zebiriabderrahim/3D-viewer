@@ -2,7 +2,7 @@
 // Created by ABDERRAHIM ZEBIRI on 2024-03-16.
 //
 
-#include "VertexBuffer.h"
+#include "../include/VertexBuffer.h"
 
 namespace v3D {
     VertexBuffer::VertexBuffer(const float *data, GLuint size) {

@@ -27,6 +27,14 @@ public:
 
     [[nodiscard]] GLint getAttribLocation(const std::string& name, bool verbose = true) const;
     [[nodiscard]] GLint getUniformLocation(const std::string& name);
+
+    void setUniform1i(const char* name, int value);
+    void setUniform1f(const char* name, float value);
+    void setUniform2f(const char* name, float v0, float v1);
+    void setUniform3f(const char* name, float v0, float v1, float v2);
+    void setUniform4f(const char* name, float v0, float v1, float v2, float v3);
+    void setUniformMatrix4fv(const char* name, const float* value);
+
     void setUniformBlockBinding(const char* name, GLuint bindingIndex);
 
     void setTransformFeedbackVaryings(const char** names, GLsizei count, GLenum mode);

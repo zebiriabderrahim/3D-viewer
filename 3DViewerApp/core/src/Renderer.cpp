@@ -2,10 +2,10 @@
 // Created by ABDERRAHIM ZEBIRI on 2024-03-17.
 //
 
-#include "Renderer.h"
-#include "VertexArray.h"
-#include "IndexBuffer.h"
-#include "ShaderProgram.h"
+#include "../include/Renderer.h"
+#include "../include/VertexArray.h"
+#include "../include/IndexBuffer.h"
+#include "../include/ShaderProgram.h"
 
 namespace v3D {
 

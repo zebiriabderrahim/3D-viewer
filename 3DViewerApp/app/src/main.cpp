@@ -2,11 +2,6 @@
 
 #include <GLFW/glfw3.h>
 
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <string>
-
 #include "spdlog/spdlog.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
@@ -14,6 +9,7 @@
 #include "ShaderProgram.h"
 #include "Shader.h"
 #include "Renderer.h"
+#include "Texture.h"
 
 
 #define PBYTE(CHAINE) ((CHAINE) != NULL ? (reinterpret_cast<const char*>(CHAINE)) : "????")
@@ -87,12 +83,15 @@ int main() {
         va.unbind();
 
         v3D::ShaderProgram shaderProgram;
-        shaderProgram.initFromFiles("../vertexShader.glsl", "../fragmentShader.glsl");
+        shaderProgram.initFromFiles("../../resources/shaders/vertexShader.glsl",
+                                    "../../resources/shaders/fragmentShader.glsl");
         shaderProgram.use();
 
-        GLint location = shaderProgram.getUniformLocation("u_Color");
+        v3D::Texture texture("../../resources/textures/wood_texture.png");
+        texture.bind();
 
-        glUniform4f(location, 0.6f, 0.0f, 0.0f, 1.0f);
+        shaderProgram.setUniform1i("u_Texture", 0);
+        shaderProgram.setUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
         glClearColor(0.55f, 0.5f, 0.5f, 1.0f);
 
         v3D::Renderer renderer;
@@ -109,8 +108,9 @@ int main() {
             glfwPollEvents();
         }
 
-        // Cleanup
 
+        // Cleanup
+        texture.unbind();
         spdlog::info("Closing application");
     }
     glfwTerminate();

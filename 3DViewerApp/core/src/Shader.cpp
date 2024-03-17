@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <spdlog/spdlog.h>
-#include "Shader.h"
+#include "../include/Shader.h"
 
 namespace v3D {
     Shader::Shader(GLenum type, const std::string& filepath) {
