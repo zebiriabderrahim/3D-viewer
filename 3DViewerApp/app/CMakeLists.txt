@@ -1,31 +1,19 @@
 cmake_minimum_required(VERSION 3.10)
-project(3DViewerApp)
+project(3DViewerAppExecutable)
 
-# Specify the C++ standard
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+# Set the include directories for the app module
 
-# Add your main application's source files
-add_executable(${PROJECT_NAME}
-        main.cpp
-        VertexBuffer.cpp
-        IndexBuffer.cpp
-        VertexArray.cpp
-        Shader.cpp
-        ShaderProgram.cpp
-        Renderer.cpp
-        )
+add_executable(3DViewerApp src/main.cpp)
 
-
-# Find and link OpenGL and GLFW and GLEW
-find_package(OpenGL REQUIRED)
-target_link_libraries(${PROJECT_NAME} OpenGL::GL)
+include_directories(${APP_INCLUDE_DIR})
 
 find_package(glfw3 REQUIRED)
-target_link_libraries(${PROJECT_NAME} glfw)
+target_link_libraries(3DViewerApp glfw)
 
 find_package(GLEW REQUIRED)
-target_link_libraries(${PROJECT_NAME} GLEW::GLEW)
+target_link_libraries(3DViewerApp GLEW::GLEW)
 
 find_package(spdlog REQUIRED)
-target_link_libraries(${PROJECT_NAME} spdlog::spdlog)
+target_link_libraries(3DViewerApp spdlog::spdlog)
+
+target_link_libraries(3DViewerApp Core)
