@@ -15,14 +15,13 @@ namespace v3D {
         ~IndexBuffer();
 
         void bind() const;
-        void Unbind() const;
+        void unbind() const;
 
-        [[nodiscard]] inline unsigned int getCount() const { return m_Count; }
+        [[nodiscard]] inline unsigned int getCount() const { return count_; }
 
     private:
-        unsigned int m_RendererID;
-        unsigned int m_Count;
-
+        unsigned int rendererID_;
+        unsigned int count_;
     };
 
 } // v3D
