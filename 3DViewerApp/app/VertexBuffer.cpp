@@ -6,17 +6,17 @@
 
 namespace v3D {
     VertexBuffer::VertexBuffer(const float *data, GLuint size) {
-        glGenBuffers(1, &m_RendererID);
-        glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+        glGenBuffers(1, &rendererID_);
+        glBindBuffer(GL_ARRAY_BUFFER, rendererID_);
         glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
     }
 
     VertexBuffer::~VertexBuffer() {
-        glDeleteBuffers(1, &m_RendererID);
+        glDeleteBuffers(1, &rendererID_);
     }
 
     void VertexBuffer::bind() const {
-        glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+        glBindBuffer(GL_ARRAY_BUFFER, rendererID_);
     }
 
     void VertexBuffer::Unbind() const {

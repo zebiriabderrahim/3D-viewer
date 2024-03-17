@@ -19,7 +19,7 @@ namespace v3D {
         void Unbind() const;
 
     private:
-        unsigned int m_RendererID;
+        unsigned int rendererID_;
 
     };
 
