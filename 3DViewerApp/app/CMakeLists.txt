@@ -6,8 +6,15 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add your main application's source files
-add_executable(${PROJECT_NAME} main.cpp)
-
+add_executable(${PROJECT_NAME}
+        main.cpp
+        VertexBuffer.cpp
+        IndexBuffer.cpp
+        VertexArray.cpp
+        Shader.cpp
+        ShaderProgram.cpp
+        Renderer.cpp
+        )
 
 
 # Find and link OpenGL and GLFW and GLEW
