@@ -4,7 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <spdlog/spdlog.h>
-#include "../include/Shader.h"
+#include "Shader.h"
 
 namespace v3D {
     Shader::Shader(GLenum type, const std::string& filepath) {
@@ -39,17 +39,18 @@ namespace v3D {
     }
 
     std::string Shader::parseShader(const std::string& filepath) {
-        std::ifstream stream(filepath);
-        //error handling
-        if (!stream) {
-            spdlog::error("Failed to open file {}", filepath);
+        try {
+            std::ifstream stream(filepath);
+            if (!stream.is_open()) {
+                throw std::runtime_error("Failed to open file");
+            }
+            std::stringstream ss;
+            ss << stream.rdbuf();
+            return ss.str();
+        } catch (const std::exception& e) {
+            spdlog::error("{}", e.what());
+            return "";
         }
-        std::string line;
-        std::stringstream ss;
-        while (getline(stream, line)) {
-            ss << line << '\n';
-        }
-        return ss.str();
     }
 
 } // v3D

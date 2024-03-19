@@ -44,6 +44,10 @@ void ShaderProgram::use() const {
     glUseProgram(programId_);
 }
 
+void ShaderProgram::unuse() const {
+    glUseProgram(0);
+}
+
 void ShaderProgram::attachShader(const v3D::Shader &shader) const {
     glAttachShader(programId_, shader.getShaderId());
 
@@ -54,11 +58,16 @@ void ShaderProgram::link() {
     checkProgramError();
 }
 
-GLint ShaderProgram::getAttribLocation(const std::string& name, bool verbose) const {
+GLint ShaderProgram::getAttribLocation(const std::string& name, bool verbose){
+    auto it = attribLocationCache_.find(name);
+    if (it != attribLocationCache_.end()) {
+        return it->second;
+    }
     GLint location = glGetAttribLocation(programId_, name.c_str());
     if (location == -1 && verbose) {
         spdlog::error("Attribute {} not found in shader program", name);
     }
+    attribLocationCache_[name] = location;
     return location;
 }
 

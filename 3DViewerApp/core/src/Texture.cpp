@@ -2,9 +2,9 @@
 // Created by ABDERRAHIM ZEBIRI on 2024-03-17.
 //
 
-#include "../include/Texture.h"
+#include "Texture.h"
 #define STB_IMAGE_IMPLEMENTATION
-#include "../include/stb_image.h"
+#include "stb_image.h"
 
 namespace v3D {
     Texture::Texture(const std::string &path)

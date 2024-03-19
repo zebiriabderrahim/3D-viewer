@@ -63,35 +63,44 @@ int main() {
 
         // Vertex Buffer
         float positions[] = {
-                -0.5f, -0.5f,
-                0.5f, -0.5f,
-                0.5f, 0.5f,
-                -0.5f, 0.5f
+                -0.5f, -0.5f,0.0f, 0.0f,
+                0.5f, -0.5f, 1.0f, 0.0f,
+                0.5f, 0.5f, 1.0f, 1.0f,
+                -0.5f, 0.5f ,0.0f, 1.0f
         };
         unsigned int indices[] = {
                 0, 1, 2, 2, 3, 0
         };
 
-        v3D::VertexBuffer vb(positions, 4 * 2 * sizeof(float));
-        v3D::VertexBufferLayout layout;
-        layout.addElement<float>(2);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         v3D::VertexArray va;
+        v3D::VertexBuffer vb(positions, 4 * 4 * sizeof(float));
+        v3D::VertexBufferLayout layout;
+
+        layout.addElement<float>(2);
+        layout.addElement<float>(2);
         va.addBuffer(vb, layout);
 
         v3D::IndexBuffer ib(indices, 6);
-
-        va.unbind();
 
         v3D::ShaderProgram shaderProgram;
         shaderProgram.initFromFiles("../../resources/shaders/vertexShader.glsl",
                                     "../../resources/shaders/fragmentShader.glsl");
         shaderProgram.use();
+        //shaderProgram.setUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 
         v3D::Texture texture("../../resources/textures/wood_texture.png");
         texture.bind();
-
         shaderProgram.setUniform1i("u_Texture", 0);
-        shaderProgram.setUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+
+        va.unbind();
+        vb.unbind();
+        ib.unbind();
+        shaderProgram.unuse();
+
+
         glClearColor(0.55f, 0.5f, 0.5f, 1.0f);
 
         v3D::Renderer renderer;
@@ -101,8 +110,6 @@ int main() {
         while (!glfwWindowShouldClose(window)) {
             processInput(window);
             renderer.clear();
-            va.bind();
-            ib.bind();
             renderer.draw(va, ib, shaderProgram);
             glfwSwapBuffers(window);
             glfwPollEvents();

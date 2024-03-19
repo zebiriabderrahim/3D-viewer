@@ -2,7 +2,7 @@
 // Created by ABDERRAHIM ZEBIRI on 2024-03-16.
 //
 
-#include "../include/VertexBuffer.h"
+#include "VertexBuffer.h"
 
 namespace v3D {
     VertexBuffer::VertexBuffer(const float *data, GLuint size) {
@@ -19,7 +19,7 @@ namespace v3D {
         glBindBuffer(GL_ARRAY_BUFFER, rendererID_);
     }
 
-    void VertexBuffer::Unbind() const {
+    void VertexBuffer::unbind() const {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 

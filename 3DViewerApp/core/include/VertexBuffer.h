@@ -16,7 +16,7 @@ namespace v3D {
         VertexBuffer(const float *data, GLuint size);
         ~VertexBuffer();
         void bind() const;
-        void Unbind() const;
+        void unbind() const;
 
     private:
         unsigned int rendererID_;

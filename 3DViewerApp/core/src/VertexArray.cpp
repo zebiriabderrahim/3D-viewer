@@ -2,7 +2,7 @@
 // Created by ABDERRAHIM ZEBIRI on 2024-03-16.
 //
 
-#include "../include/VertexArray.h"
+#include "VertexArray.h"
 
 namespace v3D {
     VertexArray::VertexArray() {
