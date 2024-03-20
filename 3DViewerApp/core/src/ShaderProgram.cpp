@@ -135,4 +135,7 @@ void ShaderProgram::checkProgramError() const {
         glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, value);
     }
 
+    void ShaderProgram::setUniformMatrix4fv(const char *name, const glm::mat4 &value) {
+        glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
+    }
 } // v3D

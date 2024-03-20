@@ -26,5 +26,8 @@ target_link_libraries(Core OpenGL::GL)
 find_package(GLEW REQUIRED)
 target_link_libraries(Core GLEW::GLEW)
 
-find_package(spdlog REQUIRED)
+find_package(glm CONFIG REQUIRED)
+target_link_libraries(Core glm::glm)
+
+find_package(spdlog CONFIG REQUIRED)
 target_link_libraries(Core spdlog::spdlog)

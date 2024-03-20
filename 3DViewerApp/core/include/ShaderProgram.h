@@ -8,6 +8,7 @@
 #include <GL/glew.h>
 #include <unordered_map>
 #include <string>
+#include "glm/glm.hpp"
 
 namespace v3D {
 
@@ -35,6 +36,7 @@ public:
     void setUniform3f(const char* name, float v0, float v1, float v2);
     void setUniform4f(const char* name, float v0, float v1, float v2, float v3);
     void setUniformMatrix4fv(const char* name, const float* value);
+    void setUniformMatrix4fv(const char* name, const glm::mat4& value);
 
     void setUniformBlockBinding(const char* name, GLuint bindingIndex);
 
