@@ -2,8 +2,8 @@
 // Created by ABDERRAHIM ZEBIRI on 2024-03-16.
 //
 
-#include "../include/ShaderProgram.h"
-#include "../include/Shader.h"
+#include "ShaderProgram.h"
+#include "Shader.h"
 #include <spdlog/spdlog.h>
 
 namespace v3D {
@@ -111,31 +111,27 @@ void ShaderProgram::checkProgramError() const {
     }
 }
 
-    void ShaderProgram::setUniform1i(const char *name, int value) {
+    void ShaderProgram::setUniform1i(const std::string& name, int value) {
         glUniform1i(getUniformLocation(name), value);
     }
 
-    void ShaderProgram::setUniform1f(const char *name, float value) {
+    void ShaderProgram::setUniform1f(const std::string& name, float value) {
         glUniform1f(getUniformLocation(name), value);
     }
 
-    void ShaderProgram::setUniform2f(const char *name, float v0, float v1) {
+    void ShaderProgram::setUniform2f(const std::string& name, float v0, float v1) {
         glUniform2f(getUniformLocation(name), v0, v1);
     }
 
-    void ShaderProgram::setUniform3f(const char *name, float v0, float v1, float v2) {
+    void ShaderProgram::setUniform3f(const std::string& name, float v0, float v1, float v2) {
         glUniform3f(getUniformLocation(name), v0, v1, v2);
     }
 
-    void ShaderProgram::setUniform4f(const char *name, float v0, float v1, float v2, float v3) {
+    void ShaderProgram::setUniform4f(const std::string& name, float v0, float v1, float v2, float v3) {
         glUniform4f(getUniformLocation(name), v0, v1, v2, v3);
     }
 
-    void ShaderProgram::setUniformMatrix4fv(const char *name, const float *value) {
-        glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, value);
-    }
-
-    void ShaderProgram::setUniformMatrix4fv(const char *name, const glm::mat4 &value) {
+    void ShaderProgram::setUniformMatrix4fv(const std::string& name, const glm::mat4 &value) {
         glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
     }
 } // v3D
