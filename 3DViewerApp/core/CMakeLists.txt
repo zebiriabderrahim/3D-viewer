@@ -15,7 +15,10 @@ set(CORE_SRC
         src/ShaderProgram.cpp
         src/Renderer.cpp
         src/Texture.cpp
-        )
+        src/Window.cpp
+        src/UniformBuffer.cpp
+        src/Camera.cpp)
+
 
 add_library(Core ${CORE_SRC})
 target_include_directories(Core PUBLIC ${CORE_INCLUDE_DIR})
