@@ -26,62 +26,63 @@ namespace v3D {
     };
 
     class Logger {
+
     public:
-        static Logger& getInstance();
+        static Logger &getInstance();
 
-        Logger(const Logger&) = delete;
-        Logger& operator=(const Logger&) = delete;
+        Logger(const Logger &) = delete;
 
+        Logger &operator=(const Logger &) = delete;
 
 
         template<typename... Args>
-        static void info(const std::string& format, Args... args) {
+        static void info(const std::string &format, Args... args) {
             getInstance().log(Level::Info, format, std::forward<Args>(args)...);
         }
 
         template<typename... Args>
-        static void warning(const std::string& format, Args... args) {
+        static void warning(const std::string &format, Args... args) {
             getInstance().log(Level::Warning, format, std::forward<Args>(args)...);
         }
 
         template<typename... Args>
-        static void error(const std::string& format, Args... args) {
+        static void error(const std::string &format, Args... args) {
             getInstance().log(Level::Error, format, std::forward<Args>(args)...);
         }
 
     private:
         Logger() = default;
+
         std::mutex mutex_;
 
-        static void levelToString(std::ostringstream& stream, Level level);
+
+        static std::string levelToString(Level level);
+
+        static std::string getFormattedTime();
 
         template<typename... Args>
-        void log(Level level, const std::string& format, Args... args) {
-            auto now = std::chrono::system_clock::now();
-            auto time = std::chrono::system_clock::to_time_t(now);
-            auto milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()) % 1000;
-
+        void log(Level level, const std::string &format, Args... args) {
             std::ostringstream stream;
 
-            stream << std::put_time(std::localtime(&time), "[%Y-%m-%d %H:%M:%S")
-                   << '.' << std::setfill('0') << std::setw(3) << milliseconds.count() << "] ";
+            stream << getFormattedTime() << " " << levelToString(level)
+                   << " " << formatString(format, std::forward<Args>(args)...)
+                   << RESET << std::endl;
 
-            levelToString(stream, level);
-            stream << " " << formatString(format, std::forward<Args>(args)...) << RESET << std::endl;
-
-            std::lock_guard<std::mutex> guard(mutex_);
-            std::cout << stream.str();
+            {
+                std::lock_guard<std::mutex> guard(mutex_);
+                std::cout << stream.str();
+            }
         }
 
         template<typename... Args>
-        std::string formatString(const std::string& format, Args... args) {
+        std::string formatString(const std::string &format, Args... args) {
             std::ostringstream stream;
             formatImpl(stream, format, std::forward<Args>(args)...);
             return stream.str();
         }
 
         template<typename T, typename... Args>
-        void formatImpl(std::ostringstream& stream, const std::string& format, T value, Args... args) {
+        void formatImpl(std::ostringstream &stream, const std::string &format, T value, Args... args) {
             size_t pos = format.find("{}");
             if (pos != std::string::npos) {
                 stream << format.substr(0, pos) << value;
@@ -92,14 +93,14 @@ namespace v3D {
         }
 
         // Base case for recursion
-        static void formatImpl(std::ostringstream& stream, const std::string& format) {
+        static void formatImpl(std::ostringstream &stream, const std::string &format) {
             stream << format;
         }
     };
 
-    #define LOG_INFO(...) v3D::Logger::info(__VA_ARGS__)
-    #define LOG_WARNING(...) v3D::Logger::warning(__VA_ARGS__)
-    #define LOG_ERROR(...) v3D::Logger::error(__VA_ARGS__)
+#define LOG_INFO(...) v3D::Logger::info(__VA_ARGS__)
+#define LOG_WARNING(...) v3D::Logger::warning(__VA_ARGS__)
+#define LOG_ERROR(...) v3D::Logger::error(__VA_ARGS__)
 
 } // namespace v3D
 
