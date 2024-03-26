@@ -17,7 +17,7 @@ set(CORE_SRC
         src/Texture.cpp
         src/Window.cpp
         src/UniformBuffer.cpp
-        src/Camera.cpp)
+        src/Camera.cpp src/Logger.cpp include/Logger.h)
 
 
 add_library(Core ${CORE_SRC})
@@ -32,5 +32,3 @@ target_link_libraries(Core GLEW::GLEW)
 find_package(glm CONFIG REQUIRED)
 target_link_libraries(Core glm::glm)
 
-find_package(spdlog CONFIG REQUIRED)
-target_link_libraries(Core spdlog::spdlog)

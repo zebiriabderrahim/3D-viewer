@@ -4,7 +4,8 @@
 
 #include "ShaderProgram.h"
 #include "Shader.h"
-#include <spdlog/spdlog.h>
+#include "Logger.h"
+
 
 namespace v3D {
 
@@ -65,7 +66,7 @@ GLint ShaderProgram::getAttribLocation(const std::string& name, bool verbose){
     }
     GLint location = glGetAttribLocation(programId_, name.c_str());
     if (location == -1 && verbose) {
-        spdlog::error("Attribute {} not found in shader program", name);
+        LOG_ERROR("Attribute {} not found in shader program", name);
     }
     attribLocationCache_[name] = location;
     return location;
@@ -78,24 +79,20 @@ GLint ShaderProgram::getUniformLocation(const std::string& name){
     }
     GLint location = glGetUniformLocation(programId_, name.c_str());
     if (location == -1) {
-        spdlog::error("Uniform {} not found in shader program", name);
+        LOG_ERROR("Uniform {} not found in shader program", name);
     }
     uniformLocationCache_[name] = location;
     return location;
 }
 
-void ShaderProgram::setUniformBlockBinding(const char *name, GLuint bindingIndex) {
+void ShaderProgram::setUniformBlockBinding(const char *name, GLuint bindingIndex) const {
     GLuint blockIndex = glGetUniformBlockIndex(programId_, name);
     if (blockIndex == GL_INVALID_INDEX) {
-        spdlog::error("Uniform block {} not found in shader program", name);
+        LOG_ERROR("Uniform block {} not found in shader program", name);
     }
     glUniformBlockBinding(programId_, blockIndex, bindingIndex);
 }
 
-void ShaderProgram::setTransformFeedbackVaryings(const char **names, GLsizei count, GLenum mode) {
-    glTransformFeedbackVaryings(programId_, count, names, mode);
-    link();
-}
 
 void ShaderProgram::checkProgramError() const {
     int result;
@@ -105,8 +102,7 @@ void ShaderProgram::checkProgramError() const {
         glGetProgramiv(programId_, GL_INFO_LOG_LENGTH, &length);
         char *message = (char *) alloca(length * sizeof(char));
         glGetProgramInfoLog(programId_, length, &length, message);
-        spdlog::error("Failed to link shader program!");
-        spdlog::error("{}", message);
+        LOG_ERROR("Failed to link program: {}", message);
         glDeleteProgram(programId_);
     }
 }
@@ -132,6 +128,6 @@ void ShaderProgram::checkProgramError() const {
     }
 
     void ShaderProgram::setUniformMatrix4fv(const std::string& name, const glm::mat4 &value) {
-        glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &value[0][0]);
+        glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(value));
     }
 } // v3D

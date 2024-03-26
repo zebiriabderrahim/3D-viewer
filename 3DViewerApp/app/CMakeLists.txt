@@ -23,7 +23,4 @@ target_link_libraries(3DViewerApp glfw)
 find_package(GLEW REQUIRED)
 target_link_libraries(3DViewerApp GLEW::GLEW)
 
-find_package(spdlog REQUIRED)
-target_link_libraries(3DViewerApp spdlog::spdlog)
-
 target_link_libraries(3DViewerApp Core)

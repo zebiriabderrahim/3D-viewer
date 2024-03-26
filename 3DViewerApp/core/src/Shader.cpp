@@ -3,8 +3,9 @@
 //
 #include <fstream>
 #include <sstream>
-#include <spdlog/spdlog.h>
 #include "Shader.h"
+#include "Logger.h"
+
 
 namespace v3D {
     Shader::Shader(GLenum type, const std::string& filepath) {
@@ -32,8 +33,7 @@ namespace v3D {
             glGetShaderiv(shaderId_, GL_INFO_LOG_LENGTH, &length);
             char *message = (char *) alloca(length * sizeof(char));
             glGetShaderInfoLog(shaderId_, length, &length, message);
-            spdlog::error("Failed to compile shader!");
-            spdlog::error("{}", message);
+            LOG_ERROR("Failed to compile shader: {}", message);
             glDeleteShader(shaderId_);
         }
     }
@@ -42,13 +42,13 @@ namespace v3D {
         try {
             std::ifstream stream(filepath);
             if (!stream.is_open()) {
-                throw std::runtime_error("Failed to open file");
+                throw std::runtime_error("Failed to open file: " + filepath);
             }
             std::stringstream ss;
             ss << stream.rdbuf();
             return ss.str();
         } catch (const std::exception& e) {
-            spdlog::error("{}", e.what());
+            LOG_ERROR("Failed to parse shader: {}", e.what());
             return "";
         }
     }

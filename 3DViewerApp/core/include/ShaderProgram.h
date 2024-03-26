@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include <string>
 #include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace v3D {
 
@@ -37,7 +38,7 @@ public:
     void setUniform4f(const std::string& name, float v0, float v1, float v2, float v3);
     void setUniformMatrix4fv(const std::string& name, const glm::mat4& value);
 
-    void setUniformBlockBinding(const char* name, GLuint bindingIndex);
+    void setUniformBlockBinding(const char* name, GLuint bindingIndex) const;
 
     void setTransformFeedbackVaryings(const char** names, GLsizei count, GLenum mode);
 
