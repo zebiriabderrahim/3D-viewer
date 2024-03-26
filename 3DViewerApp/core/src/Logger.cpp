@@ -15,6 +15,13 @@ namespace v3D {
     std::string Logger::levelToString(Level level) {
         std::ostringstream stream;
         switch (level) {
+
+            case Level::Debug:
+                stream << "[ " << CYAN << "DEBUG" << RESET << " ]";
+                break;
+            case Level::Trace:
+                stream << "[ " << MAGENTA << "TRACE" << RESET << " ]";
+                break;
             case Level::Info:
                 stream << "[ " << GREEN << "INFO" << RESET << " ]";
                 break;
@@ -23,6 +30,9 @@ namespace v3D {
                 break;
             case Level::Error:
                 stream << "[ " << RED << "ERROR" << RESET << " ]";
+                break;
+            case Level::Critical:
+                stream << "[ " << RED << "CRITICAL" << RESET << " ]";
                 break;
             default:
                 stream << RESET << "UNKNOWN";

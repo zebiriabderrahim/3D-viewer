@@ -12,17 +12,23 @@
 #include <ctime>
 #include <iomanip>
 
+#define RESET "\033[0m"
 #define RED "\033[31m"
 #define GREEN "\033[32m"
 #define YELLOW "\033[33m"
-#define RESET "\033[0m"
+#define CYAN "\033[36m"
+#define MAGENTA "\033[35m"
+
 
 namespace v3D {
 
     enum class Level {
+        Debug,
+        Trace,
         Info,
         Warning,
-        Error
+        Error,
+        Critical
     };
 
     class Logger {
@@ -34,6 +40,16 @@ namespace v3D {
 
         Logger &operator=(const Logger &) = delete;
 
+
+        template<typename... Args>
+        static void debug(const std::string &format, Args... args) {
+            getInstance().log(Level::Debug, format, std::forward<Args>(args)...);
+        }
+
+        template<typename... Args>
+        static void trace(const std::string &format, Args... args) {
+            getInstance().log(Level::Trace, format, std::forward<Args>(args)...);
+        }
 
         template<typename... Args>
         static void info(const std::string &format, Args... args) {
@@ -48,6 +64,11 @@ namespace v3D {
         template<typename... Args>
         static void error(const std::string &format, Args... args) {
             getInstance().log(Level::Error, format, std::forward<Args>(args)...);
+        }
+
+        template<typename... Args>
+        static void critical(const std::string &format, Args... args) {
+            getInstance().log(Level::Critical, format, std::forward<Args>(args)...);
         }
 
     private:
@@ -98,9 +119,12 @@ namespace v3D {
         }
     };
 
+#define LOG_DEBUG(...) v3D::Logger::debug(__VA_ARGS__)
+#define LOG_TRACE(...) v3D::Logger::trace(__VA_ARGS__)
 #define LOG_INFO(...) v3D::Logger::info(__VA_ARGS__)
 #define LOG_WARNING(...) v3D::Logger::warning(__VA_ARGS__)
 #define LOG_ERROR(...) v3D::Logger::error(__VA_ARGS__)
+#define LOG_CRITICAL(...) v3D::Logger::critical(__VA_ARGS__)
 
 } // namespace v3D
 
