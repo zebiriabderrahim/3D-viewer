@@ -4,7 +4,7 @@ project(zyxDiveApp)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_subdirectory(core)
+add_subdirectory(render)
 add_subdirectory(app)
 # add_subdirectory(gui)
 # add_subdirectory(models)
